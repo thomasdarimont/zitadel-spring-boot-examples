@@ -27,6 +27,30 @@ The Spring Boot app `api` is configured as an API in Zitadel and uses the Spring
 
 Base URL: http://localhost:18090
 
+# Build
+
+```
+mvn clean package -DskipTests
+```
+
+# Run
+
+API:
+```
+java \
+  -Dspring.security.oauth2.resourceserver.opaquetoken.client-id=xxx \
+  -Dspring.security.oauth2.resourceserver.opaquetoken.client-secret=xxxx \
+  -jar api/target/api-0.0.1-SNAPSHOT.jar
+```
+
+WEB:
+```
+java \
+  -Dspring.security.oauth2.client.registration.zitadel.client-id=xxx \
+  -Dspring.security.oauth2.client.registration.zitadel.client-secret=xxx \
+  -jar web/target/web-0.0.1-SNAPSHOT.jar 
+```
+
 # Configuration
 
 ## Zitadel
