@@ -27,7 +27,17 @@ The Spring Boot app `api` is configured as an API in Zitadel and uses the Spring
 
 Base URL: http://localhost:18090
 
-# Spring Configuration
+# Configuration
+
+## Zitadel
+
+![Client Configurations](spring-boot-zitadel-config.png)
+
+![Web App Configurations](spring-boot-zitadel-config-web-app.png)
+
+![API App Configurations](spring-boot-zitadel-config-api-app.png)
+
+## Spring
 
 The `web` application requires the following JVM Properties to be configured:
 ```
