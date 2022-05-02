@@ -30,16 +30,16 @@ Base URL: http://localhost:18090
 # Spring Configuration
 
 The `web` application requires the following JVM Properties to be configured:
-``
+```
 -Dspring.security.oauth2.client.registration.zitadel.client-id=...web-client-id
 -Dspring.security.oauth2.client.registration.zitadel.client-secret=...web-client-secret
-``
+```
 
 The `api` application requires the following JVM Properties to be configured:
-``
+```
 -Dspring.security.oauth2.resourceserver.opaquetoken.client-id=...api-client-id
 -Dspring.security.oauth2.resourceserver.opaquetoken.client-secret=...api-client-secret
-``
+```
 
 # Misc
 
