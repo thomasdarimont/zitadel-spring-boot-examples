@@ -33,7 +33,7 @@ Base URL: http://localhost:18090
 
 ![Client Configurations](spring-boot-zitadel-config.png)
 
-![Web App Configurations](spring-boot-zitadel-config-web-app.png)
+![Web App Configurations](spring-boot-zitadel-config-web-app2.png)
 
 ![API App Configurations](spring-boot-zitadel-config-api-app.png)
 
