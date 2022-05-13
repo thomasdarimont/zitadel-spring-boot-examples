@@ -19,9 +19,20 @@
 </script>
 
 <div class="jumbotron">
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button" onclick="greetme()">Greet me</a>
-    </p>
+
+    <div>
+        <h2>User Roles</h2>
+        <ol>
+            <li th:each="roleName, iterator: ${roleNames}" th:text="${roleName}">Role</li>
+        </ol>
+    </div>
+
+    <div>
+        <h2>Call Backend API</h2>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="greetme()">Greet me</a>
+        </p>
+    </div>
 
     <p id="message" class=".alert-success">
 

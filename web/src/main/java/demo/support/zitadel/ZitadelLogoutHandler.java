@@ -1,19 +1,20 @@
-package demo.support;
+package demo.support.zitadel;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
 @Slf4j
 @Component
 public class ZitadelLogoutHandler implements LogoutHandler {
+
+    public static final String ZITADEL_END_SESSION_ENDPOINT = "https://accounts.zitadel.ch/oauth/v2/endsession";
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
@@ -21,21 +22,17 @@ public class ZitadelLogoutHandler implements LogoutHandler {
         var principal = (DefaultOidcUser) auth.getPrincipal();
         var idToken = principal.getIdToken();
 
-        log.info("Propagate logout to zitadel for user. userId={}", idToken.getSubject());
+        log.debug("Propagate logout to zitadel for user. userId={}", idToken.getSubject());
 
-        var issuerUri = idToken.getIssuer().toString();
         var idTokenValue = idToken.getTokenValue();
-
         var defaultRedirectUri = generateAppUri(request);
-
-        var logoutUrl = createZitdaelLogoutUrl(idTokenValue, defaultRedirectUri);
+        var logoutUrl = createZitadelLogoutUrl(idTokenValue, defaultRedirectUri);
 
         try {
             response.sendRedirect(logoutUrl);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Could not propagate logout for user to zitadel. userId={}", idToken.getSubject(), e);
         }
-
     }
 
     private String generateAppUri(HttpServletRequest request) {
@@ -48,7 +45,9 @@ public class ZitadelLogoutHandler implements LogoutHandler {
         return request.getScheme() + "://" + hostname + request.getContextPath();
     }
 
-    private String createZitdaelLogoutUrl(String idTokenValue, String postRedirectUri) {
-        return "https://accounts.zitadel.ch/oauth/v2/endsession?id_token_hint=" + idTokenValue + "&post_logout_redirect_uri=" + postRedirectUri;
+    private String createZitadelLogoutUrl(String idTokenValue, String postRedirectUri) {
+        return ZITADEL_END_SESSION_ENDPOINT + //
+                "?id_token_hint=" + idTokenValue //
+                + "&post_logout_redirect_uri=" + postRedirectUri;
     }
 }
